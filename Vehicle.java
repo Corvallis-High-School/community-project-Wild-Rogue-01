@@ -1,30 +1,30 @@
+import java.util.ArrayList;
+
 public class Vehicle
 {
-    protected static ArrayList<Vehicle[]> objArray = new ArrayList<>();
+    protected static ArrayList<Vehicle> objArray = new ArrayList<>();
 
     protected String modeTransport;
     protected double travelTime;
     protected double distTraveled;
     
-    public Vehicle(String m, double t, double d){
+    public Vehicle(){
         this.modeTransport = "";
         this.travelTime = 0;
         this.distTraveled = 0;
-        this.Vehicle.add(this.modeTransport, this.efficiency(0));
 
         this.push();
     }
-
     public static void print() {
-        for(Object value : objArray) {
-            System.out.println(value + ": " + value.toString());
+        for(Vehicle value : Vehicle.objArray) {
+            System.out.println(value.getModeTransport() + ": " + value.toString());
         }
-    }public static void findAndPrint(Vehicle obj) {
+    }public static void findAndPrint(Object obj) {
         boolean bool = true;
-        for(Object value : objArray) {
+        for(Vehicle value : Vehicle.objArray) {
             if(value.equals(obj)){
                 bool = false;
-                System.out.println(value + ": " + value.toString());
+                System.out.println(value.getModeTransport() + ": " + value.toString());
             }
         }
         if(bool) {
@@ -55,13 +55,8 @@ public class Vehicle
     public double efficiency(int trafficLvl) {
         return (this.distTraveled + trafficLvl) / (this.travelTime);
     }
-    public void push() {
+    private void push() {
         objArray.add(this);
-    }
-
-    public static void main(String[] args)
-    {
-        
     }
 }
 class Car extends Vehicle 
@@ -80,5 +75,22 @@ class Car extends Vehicle
     }
     public String toString() {
         return super.toString() + "\n" + avgSpdLim;
+    }
+}
+class Bike extends Vehicle 
+{
+    private double avgSpd;
+
+    public Bike() {
+        super();
+        this.avgSpd = 12;
+        this.modeTransport = "bike";
+    }
+
+    public double efficiency(int trafficLvl) {
+        return ((this.distTraveled + trafficLvl) * this.avgSpd) / (this.travelTime);
+    }
+    public String toString() {
+        return super.toString() + "\n" + avgSpd;
     }
 }
